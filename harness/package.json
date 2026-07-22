@@ -1,0 +1,11 @@
+{
+  "name": "desafio-harness",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Gerador de carga e verificador de invariantes. Node puro, sem dependências.",
+  "scripts": {
+    "load": "node load.js",
+    "verify": "node verify.js"
+  }
+}

@@ -1,0 +1,58 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: desafio
+      POSTGRES_PASSWORD: desafio
+      POSTGRES_DB: pedidos
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U desafio -d pedidos"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  external-api:
+    build: ./external-api
+    ports:
+      - "4000:4000"
+    environment:
+      PORT: 4000
+      EXTERNAL_PROFILE: /app/profiles/dev.json
+    volumes:
+      - ./external-api/profiles:/app/profiles:ro
+    restart: unless-stopped
+
+  api:
+    build: ./api
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      DATABASE_URL: postgres://desafio:desafio@db:5432/pedidos
+      PARTNER_BASE_URL: http://external-api:4000
+    depends_on:
+      db:
+        condition: service_healthy
+      external-api:
+        condition: service_started
+    restart: unless-stopped
+
+  harness:
+    build: ./harness
+    profiles: ["tools"]
+    environment:
+      API_BASE_URL: http://api:3000
+      PARTNER_BASE_URL: http://external-api:4000
+      DATABASE_URL: postgres://desafio:desafio@db:5432/pedidos
+    depends_on:
+      - api
+      - external-api
+
+volumes:
+  db-data:

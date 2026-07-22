@@ -1,0 +1,6 @@
+avaliacao/
+node_modules/
+dist/
+.env
+*.log
+scripts/

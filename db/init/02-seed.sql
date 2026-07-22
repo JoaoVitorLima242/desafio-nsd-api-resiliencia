@@ -1,0 +1,8 @@
+-- Sem dados semeados no banco.
+--
+-- Catálogo e estoque NÃO vivem no Postgres: eles pertencem ao parceiro externo
+-- (o simulador em external-api/), que mantém seu próprio estado em memória.
+-- Os SKUs (SKU-001 a SKU-020) e seus saldos são semeados lá, em state.js.
+--
+-- A tabela `orders` começa vazia — cada pedido é criado pela API a partir das
+-- requisições do participante ou do harness de carga.

@@ -1,0 +1,43 @@
+{
+  "_comment": "Formato do perfil de AVALIAÇÃO (referência). O avaliador mantém o perfil real fora do repositório, em avaliacao/eval.json (ignorado pelo git). Este exemplo apenas documenta o formato — usa os MESMOS modos de falha do dev.json, mas com intensidade e timing diferentes, para que soluções calibradas para valores fixos falhem.",
+  "seed": 7919,
+  "global_rate_limit": { "limit": 400, "window_ms": 60000 },
+  "groups": {
+    "catalog": {
+      "error_rate": 0.09,
+      "latency": { "base_ms": 60, "jitter_ms": 90, "p99_ms": 1200, "p99_rate": 0.02 },
+      "timeout_ambiguous_rate": 0,
+      "rate_limit": null,
+      "outage_windows": [],
+      "price_drift_ms": 17000
+    },
+    "inventory": {
+      "error_rate": 0.14,
+      "latency": { "base_ms": 110, "jitter_ms": 180, "p99_ms": 3000, "p99_rate": 0.04 },
+      "timeout_ambiguous_rate": 0.11,
+      "rate_limit": { "limit": 200, "window_ms": 60000 },
+      "outage_windows": [{ "start_ms": 45000, "duration_ms": 20000 }]
+    },
+    "payments": {
+      "error_rate": 0.16,
+      "latency": { "base_ms": 220, "jitter_ms": 300, "p99_ms": 8000, "p99_rate": 0.05 },
+      "timeout_ambiguous_rate": 0.13,
+      "rate_limit": { "limit": 90, "window_ms": 60000 },
+      "outage_windows": [{ "start_ms": 90000, "duration_ms": 40000 }]
+    },
+    "notifications": {
+      "error_rate": 0.5,
+      "latency": { "base_ms": 300, "jitter_ms": 600, "p99_ms": 12000, "p99_rate": 0.12 },
+      "timeout_ambiguous_rate": 0,
+      "rate_limit": null,
+      "outage_windows": []
+    },
+    "shipments": {
+      "error_rate": 0.08,
+      "latency": { "base_ms": 400, "jitter_ms": 700, "p99_ms": 15000, "p99_rate": 0.15 },
+      "timeout_ambiguous_rate": 0,
+      "rate_limit": null,
+      "outage_windows": []
+    }
+  }
+}
